@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobflix/app/data/categories.dart';
 import 'package:mobflix/app/data/my_database.dart';
 import 'package:mobflix/app/theme/light/light_colors.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -11,6 +12,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  String? selectedCategory;
   TextEditingController url = TextEditingController();
   TextEditingController categorie = TextEditingController();
   bool previewIsDone = false;
@@ -72,17 +74,48 @@ class _RegisterPageState extends State<RegisterPage> {
                   color: Color(0xFF275FA3),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: TextField(
-                  controller: categorie,
-
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Estudo, Esportes...',
-                    hintStyle: TextStyle(color: Color(0xFFB0B0B0)),
+                child: DropdownButton<String>(
+                  underline: Text(''),
+                  dropdownColor: Color(0xFF275FA3),
+                  iconEnabledColor: Color(0xFFB0B0B0),
+                  borderRadius: BorderRadius.circular(8),
+                  value: selectedCategory,
+                  isExpanded: true,
+                  hint: Text(
+                    'Selecione a categoria',
+                    style: TextStyle(color: Color(0xFFB0B0B0)),
                   ),
+                  items:
+                      categoriesColor.keys.map((String category) {
+                        return DropdownMenuItem<String>(
+                          value: category,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 16,
+                                height: 16,
+                                margin: EdgeInsets.only(right: 8),
+                                decoration: BoxDecoration(
+                                  color: categoriesColor[category],
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                              Text(
+                                category,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedCategory = value;
+                      categorie.text = value!;
+                    });
+                  },
                 ),
               ),
-
               SizedBox(height: 18),
               Text(
                 'Preview',

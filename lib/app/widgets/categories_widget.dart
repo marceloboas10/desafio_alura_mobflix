@@ -15,14 +15,17 @@ class CategoriesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width ?? 116,
+      width: width ?? 126,
       height: 32,
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Center(
-        child: Text(categorie, style: TextStyle(fontSize: 16, color: Colors.white)),
+        child: Text(
+          categorie,
+          style: TextStyle(fontSize: 16, color: Colors.white),
+        ),
       ),
     );
   }

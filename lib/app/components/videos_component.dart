@@ -19,7 +19,7 @@ class _VideosComponentState extends State<VideosComponent> {
     loadVideos();
   }
 
-    @override
+  @override
   void didUpdateWidget(covariant VideosComponent oldWidget) {
     super.didUpdateWidget(oldWidget);
     loadVideos(); // Recarrega os vídeos sempre que o widget for atualizado
@@ -41,7 +41,6 @@ class _VideosComponentState extends State<VideosComponent> {
       );
     }
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +49,49 @@ class _VideosComponentState extends State<VideosComponent> {
         final videos = _videos[index];
 
         return Dismissible(
+          background: Container(
+            color: Theme.of(context).colorScheme.error,
+            alignment: Alignment.centerRight,
+            padding: const EdgeInsets.only(right: 20),
+            child: const Icon(Icons.delete, size: 40, color: Colors.white),
+          ),
           key: ValueKey(videos['id']),
           onDismissed: (DismissDirection direction) {
             deleteVideo(videos['id']);
           },
+          confirmDismiss:
+              (_) => showDialog(
+                context: context,
+                builder: (ctx) {
+                  return AlertDialog(
+                    title: const Text(
+                      "Tem certeza que deseja excluir?",
+                      style: TextStyle(fontSize: 18),
+                      textAlign: TextAlign.center,
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop(false);
+                        },
+                        child: const Text(
+                          'Não',
+                          style: TextStyle(color: Colors.green),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop(true);
+                        },
+                        child: const Text(
+                          'Sim',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
           child: VideoWidget(
             categorie: videos['category'],
             thumbnail: videos['preview'],

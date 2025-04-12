@@ -41,7 +41,12 @@ class _HomePageState extends State<HomePage> {
             ListCategoriesComponents(),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(top: 40, left: 35),
+                padding: const EdgeInsets.only(
+                  top: 40,
+                  left: 16,
+                  right: 16,
+                  bottom: 8,
+                ),
                 child: VideosComponent(),
               ),
             ),
